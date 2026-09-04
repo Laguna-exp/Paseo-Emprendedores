@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paseo de Emprendedores · Laguna Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#0B3B44;
+  --mid:#146C74;
+  --sand:#F7F2E7;
+  --sand2:#EFE6D3;
+  --ink:#0E2A2E;
+  --accent:#D98A3D;
+  --accent-dark:#B96E27;
+  --ok:#4C9A6A;
+  --bad:#C24A3A;
+  --line:#DCD0B6;
+  --radius:14px;
+  font-family:'Inter',sans-serif;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--sand);color:var(--ink);}
+h1,h2,h3{font-family:'Fraunces',serif;margin:0;}
+header.app{
+  background:linear-gradient(135deg,var(--deep),var(--mid));
+  color:#fff;padding:28px 6vw 42px;position:relative;overflow:hidden;
+}
+header.app .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;}
+header.app h1{font-size:clamp(28px,4vw,42px);font-weight:600;margin-top:6px;}
+header.app p.sub{opacity:.85;margin-top:8px;max-width:560px;font-size:15px;}
+.wave{position:absolute;left:0;right:0;bottom:-2px;height:46px;}
+.wave svg{width:100%;height:100%;display:block;}
+main{max-width:1180px;margin:-18px auto 60px;padding:0 6vw;position:relative;z-index:2;}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:34px;}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:0 6px 18px -12px rgba(11,59,68,.25);}
+.stat .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6b6250;font-family:'IBM Plex Mono',monospace;}
+.stat .value{font-size:26px;font-weight:700;font-family:'Fraunces',serif;color:var(--deep);margin-top:4px;}
+section.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 26px;margin-bottom:26px;box-shadow:0 8px 24px -18px rgba(11,59,68,.3);}
+section.panel h2{font-size:21px;color:var(--deep);margin-bottom:4px;}
+section.panel .desc{color:#6b6250;font-size:13.5px;margin-bottom:18px;}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--sand2);cursor:pointer;transition:.15s;}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.card.active{border-color:var(--accent);background:#fff;box-shadow:0 0 0 2px var(--accent) inset;}
+.card h3{font-size:16px;color:var(--deep);}
+.card .tag{display:inline-block;margin-top:6px;font-size:11px;background:var(--accent);color:#fff;padding:2px 8px;border-radius:20px;font-family:'IBM Plex Mono',monospace;}
+.card .meta{font-size:12.5px;color:#6b6250;margin-top:8px;line-height:1.5;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);}
+th{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#6b6250;}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;}
+.badge.ok{background:#e5f3ea;color:var(--ok);}
+.badge.bad{background:#fbe8e4;color:var(--bad);}
+form.grid-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;align-items:end;}
+label{display:block;font-size:12.5px;font-weight:600;color:var(--deep);margin-bottom:5px;}
+select,input{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;}
+select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+button{cursor:pointer;border:none;border-radius:8px;padding:10px 18px;font-weight:600;font-size:14px;font-family:'Inter',sans-serif;}
+button.primary{background:var(--accent);color:#fff;}
+button.primary:hover{background:var(--accent-dark);}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--deep);}
+.hint{font-size:12.5px;color:#6b6250;margin-top:4px;}
+.msg{padding:10px 14px;border-radius:8px;font-size:13.5px;margin-top:12px;display:none;}
+.msg.show{display:block;}
+.msg.ok{background:#e5f3ea;color:var(--ok);border:1px solid #c1e2cd;}
+.msg.bad{background:#fbe8e4;color:var(--bad);border:1px solid #f1c3ba;}
+.toast-wrap{position:fixed;top:18px;right:18px;z-index:99;display:flex;flex-direction:column;gap:8px;}
+.toast{padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:600;box-shadow:0 8px 20px -8px rgba(0,0,0,.3);animation:slidein .2s ease;}
+.toast.ok{background:var(--ok);color:#fff;}
+.toast.bad{background:var(--bad);color:#fff;}
+@keyframes slidein{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-row .name{width:150px;font-size:13px;flex-shrink:0;}
+.bar-track{flex:1;background:var(--sand2);border-radius:6px;height:16px;overflow:hidden;}
+.bar-fill{height:100%;background:var(--accent);}
+.bar-row .val{width:90px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12.5px;flex-shrink:0;}
+footer{text-align:center;font-size:12px;color:#8a8066;padding:20px;font-family:'IBM Plex Mono',monospace;}
+@media(max-width:640px){
+  .dash{grid-template-columns:repeat(2,1fr);}
+  form.grid-form{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<header class="app">
+  <div class="eyebrow">Laguna Experience · Módulo comercial</div>
+  <h1>Paseo de Emprendedores</h1>
+  <p class="sub">Gestión de locales, stock y ventas de los emprendimientos del paseo. Cada venta descuenta stock en tiempo real, calcula la comisión del parque y genera puntos para el visitante.</p>
+  <div class="wave"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,30 C150,60 350,0 600,30 C850,60 1050,0 1200,30 L1200,60 L0,60 Z" fill="#F7F2E7"/></svg></div>
+</header>
+
+<main>
+  <div class="dash" id="dash"></div>
+
+  <section class="panel">
+    <h2>Emprendimientos</h2>
+    <p class="desc">Seleccioná un local para ver su información, productos y stock disponible.</p>
+    <div class="grid-cards" id="empCards"></div>
+    <div id="empDetail" style="margin-top:20px;"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Registrar venta</h2>
+    <p class="desc">La venta valida stock disponible, descuenta unidades, registra el pago, calcula la comisión de Laguna Experience y otorga puntos al visitante.</p>
+    <form class="grid-form" id="ventaForm">
+      <div>
+        <label for="selEmp">Emprendimiento</label>
+        <select id="selEmp" required></select>
+      </div>
+      <div>
+        <label for="selProd">Producto</label>
+        <select id="selProd" required></select>
+      </div>
+      <div>
+        <label for="cantidad">Cantidad</label>
+        <input type="number" id="cantidad" min="1" value="1" required>
+      </div>
+      <div>
+        <label for="selVis">Visitante (pulsera)</label>
+        <select id="selVis" required></select>
+      </div>
+      <div>
+        <button type="submit" class="primary">Registrar venta</button>
+      </div>
+    </form>
+    <div class="hint" id="stockHint"></div>
+    <div class="msg" id="ventaMsg"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Ventas recientes</h2>
+    <p class="desc">Últimas operaciones registradas en el paseo.</p>
+    <div style="overflow-x:auto;">
+    <table id="tablaVentas">
+      <thead><tr><th>ID</th><th>Emprendimiento</th><th>Producto</th><th>Cant.</th><th>Total</th><th>Comisión</th><th>Pago</th><th>Visitante</th><th>Puntos</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Estadísticas de ventas</h2>
+    <p class="desc">Ingresos acumulados por emprendimiento (parte del total corresponde a la comisión de Laguna Experience).</p>
+    <div id="statsBars"></div>
+  </section>
+</main>
+
+<footer>Laguna Experience — Paseo de Emprendedores — datos de demostración</footer>
+
+<script>
+// ---------- DATOS DE EJEMPLO ----------
+const emprendimientos = [
+  {id:'E1', nombre:'Sabores del Lago', rubro:'Gastronomía', local:'Local 3', emprendedor:'Marta Ríos', horario:'10:00–20:00'},
+  {id:'E2', nombre:'Artesanías Yerbal', rubro:'Artesanías', local:'Local 7', emprendedor:'Julián Paz', horario:'09:00–19:00'},
+  {id:'E3', nombre:'Bikes & Boards', rubro:'Alquiler', local:'Local 12', emprendedor:'Coop. Río Abierto', horario:'08:00–18:00'},
+  {id:'E4', nombre:'Dulce Laguna', rubro:'Heladería', local:'Local 5', emprendedor:'Nico Fabbri', horario:'11:00–21:00'},
+];
+
+let productos = [
+  {id:'P1', empId:'E1', nombre:'Choripán', categoria:'Comida', precio:3500, stock:20},
+  {id:'P2', empId:'E1', nombre:'Limonada artesanal', categoria:'Bebida', precio:2000, stock:0},
+  {id:'P3', empId:'E2', nombre:'Pulsera tejida', categoria:'Artesanía', precio:4500, stock:15},
+  {id:'P4', empId:'E2', nombre:'Mate de algarrobo', categoria:'Artesanía', precio:12000, stock:5},
+  {id:'P5', empId:'E3', nombre:'Alquiler bici (1h)', categoria:'Servicio', precio:6000, stock:8},
+  {id:'P6', empId:'E4', nombre:'Helado 2 bochas', categoria:'Postre', precio:3000, stock:30},
+];
+
+let visitantes = [
+  {id:'V1', nombre:'Ana Gómez', pulsera:'PUL-1001', puntos:0},
+  {id:'V2', nombre:'Luis Fernández', pulsera:'PUL-1002', puntos:0},
+  {id:'V3', nombre:'Carla Núñez', pulsera:'PUL-1003', puntos:0},
+];
+
+let ventas = [];
+let ventaCounter = 0;
+let selectedEmpId = emprendimientos[0].id;
+const COMISION_RATE = 0.10;
+const PUNTOS_POR_MONTO = 1000; // 1 punto cada $1000
+
+// ---------- UTILIDADES ----------
+function money(n){ return '$' + n.toLocaleString('es-AR'); }
+function showToast(text, type){
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = text;
+  wrap.appendChild(t);
+  setTimeout(()=>{ t.remove(); }, 3200);
+}
+function showMsg(elId, text, ok){
+  const el = document.getElementById(elId);
+  el.textContent = text;
+  el.className = 'msg show ' + (ok ? 'ok' : 'bad');
+}
+
+// ---------- RENDER ----------
+function renderDash(){
+  const totalIngresos = ventas.reduce((s,v)=>s+v.total,0);
+  const totalComision = ventas.reduce((s,v)=>s+v.comision,0);
+  const totalPuntos = ventas.reduce((s,v)=>s+v.puntos,0);
+  document.getElementById('dash').innerHTML = `
+    <div class="stat"><div class="label">Emprendimientos</div><div class="value">${emprendimientos.length}</div></div>
+    <div class="stat"><div class="label">Ventas realizadas</div><div class="value">${ventas.length}</div></div>
+    <div class="stat"><div class="label">Ingresos totales</div><div class="value">${money(totalIngresos)}</div></div>
+    <div class="stat"><div class="label">Comisión Laguna</div><div class="value">${money(totalComision)}</div></div>
+  `;
+}
+
+function renderEmpCards(){
+  const wrap = document.getElementById('empCards');
+  wrap.innerHTML = emprendimientos.map(e => `
+    <div class="card ${e.id===selectedEmpId?'active':''}" data-id="${e.id}">
+      <span class="tag">${e.rubro}</span>
+      <h3>${e.nombre}</h3>
+      <div class="meta">${e.local}<br>Horario: ${e.horario}<br>Responsable: ${e.emprendedor}</div>
+    </div>
+  `).join('');
+  wrap.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('click', ()=>{ selectedEmpId = c.dataset.id; renderEmpCards(); renderEmpDetail(); });
+  });
+  renderEmpDetail();
+}
+
+function renderEmpDetail(){
+  const emp = emprendimientos.find(e=>e.id===selectedEmpId);
+  const prods = productos.filter(p=>p.empId===selectedEmpId);
+  document.getElementById('empDetail').innerHTML = `
+    <h3 style="color:var(--deep);font-size:16px;margin-bottom:10px;">Productos — ${emp.nombre}</h3>
+    <table>
+      <thead><tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Stock</th></tr></thead>
+      <tbody>
+        ${prods.map(p=>`<tr>
+          <td>${p.nombre}</td><td>${p.categoria}</td><td>${money(p.precio)}</td>
+          <td><span class="badge ${p.stock>0?'ok':'bad'}">${p.stock>0? p.stock+' u.' : 'Sin stock'}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function fillSelects(){
+  const selEmp = document.getElementById('selEmp');
+  selEmp.innerHTML = emprendimientos.map(e=>`<option value="${e.id}">${e.nombre}</option>`).join('');
+  const selVis = document.getElementById('selVis');
+  selVis.innerHTML = visitantes.map(v=>`<option value="${v.id}">${v.nombre} — ${v.pulsera}</option>`).join('');
+  fillProductos();
+  selEmp.addEventListener('change', fillProductos);
+  document.getElementById('selProd').addEventListener('change', updateStockHint);
+}
+
+function fillProductos(){
+  const empId = document.getElementById('selEmp').value;
+  const selProd = document.getElementById('selProd');
+  const prods = productos.filter(p=>p.empId===empId);
+  selProd.innerHTML = prods.map(p=>`<option value="${p.id}">${p.nombre} (${money(p.precio)})</option>`).join('');
+  updateStockHint();
+}
+
+function updateStockHint(){
+  const prod = productos.find(p=>p.id===document.getElementById('selProd').value);
+  const hint = document.getElementById('stockHint');
+  if(!prod){ hint.textContent=''; return; }
+  hint.textContent = prod.stock>0 ? `Stock disponible: ${prod.stock} unidades.` : 'Este producto no tiene stock disponible.';
+  hint.style.color = prod.stock>0 ? '#6b6250' : 'var(--bad)';
+}
+
+function renderVentasTabla(){
+  const tbody = document.querySelector('#tablaVentas tbody');
+  tbody.innerHTML = ventas.slice().reverse().map(v=>`
+    <tr>
+      <td>${v.id}</td><td>${v.empNombre}</td><td>${v.prodNombre}</td><td>${v.cantidad}</td>
+      <td>${money(v.total)}</td><td>${money(v.comision)}</td>
+      <td><span class="badge ok">${v.pagoEstado}</span></td>
+      <td>${v.visitanteNombre}</td><td>+${v.puntos}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="9" style="color:#8a8066;">Todavía no hay ventas registradas.</td></tr>';
+}
+
+function renderStats(){
+  const wrap = document.getElementById('statsBars');
+  const totalGeneral = ventas.reduce((s,v)=>s+v.total,0) || 1;
+  wrap.innerHTML = emprendimientos.map(e=>{
+    const total = ventas.filter(v=>v.empId===e.id).reduce((s,v)=>s+v.total,0);
+    const pct = Math.round((total/totalGeneral)*100);
+    return `<div class="bar-row">
+      <div class="name">${e.nombre}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+      <div class="val">${money(total)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ---------- LÓGICA DE NEGOCIO ----------
+document.getElementById('ventaForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const empId = document.getElementById('selEmp').value;
+  const prodId = document.getElementById('selProd').value;
+  const cantidad = parseInt(document.getElementById('cantidad').value, 10);
+  const visId = document.getElementById('selVis').value;
+
+  const emp = emprendimientos.find(x=>x.id===empId);
+  const prod = productos.find(x=>x.id===prodId);
+  const vis = visitantes.find(x=>x.id===visId);
+
+  if(!prod || prod.empId !== empId){
+    showMsg('ventaMsg', 'El producto seleccionado no pertenece a este emprendimiento.', false);
+    return;
+  }
+  if(!cantidad || cantidad < 1){
+    showMsg('ventaMsg', 'Ingresá una cantidad válida.', false);
+    return;
+  }
+  // REGLA: impedir venta sin stock
+  if(prod.stock <= 0){
+    showMsg('ventaMsg', `Venta rechazada: "${prod.nombre}" no tiene stock disponible.`, false);
+    showToast('Sin stock disponible', 'bad');
+    return;
+  }
+  if(cantidad > prod.stock){
+    showMsg('ventaMsg', `Venta rechazada: sólo quedan ${prod.stock} unidades de "${prod.nombre}".`, false);
+    showToast('Stock insuficiente', 'bad');
+    return;
+  }
+
+  // Descontar stock
+  prod.stock -= cantidad;
+
+  // Registrar pago (simulado, siempre aprobado en esta demo)
+  const total = prod.precio * cantidad;
+  const pagoEstado = 'Aprobado';
+
+  // Calcular comisión para Laguna Experience
+  const comision = Math.round(total * COMISION_RATE);
+
+  // Generar puntos para el visitante
+  const puntos = Math.floor(total / PUNTOS_POR_MONTO);
+  vis.puntos += puntos;
+
+  ventaCounter++;
+  const venta = {
+    id: 'V-' + String(ventaCounter).padStart(4,'0'),
+    empId, empNombre: emp.nombre,
+    prodId, prodNombre: prod.nombre,
+    cantidad, total, comision, pagoEstado,
+    visitanteId: visId, visitanteNombre: vis.nombre,
+    puntos,
+    fecha: new Date().toLocaleString('es-AR')
+  };
+  ventas.push(venta);
+
+  showMsg('ventaMsg', `Venta ${venta.id} registrada: ${cantidad}× ${prod.nombre} = ${money(total)}. Comisión Laguna: ${money(comision)}. +${puntos} puntos para ${vis.nombre}.`, true);
+  showToast('Venta registrada correctamente', 'ok');
+
+  renderDash();
+  renderEmpDetail();
+  fillProductos();
+  renderVentasTabla();
+  renderStats();
+});
+
+// ---------- INIT ----------
+fillSelects();
+renderDash();
+renderEmpCards();
+renderVentasTabla();
+renderStats();
+</script>
+</body>
+</html>
